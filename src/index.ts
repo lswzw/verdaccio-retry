@@ -73,7 +73,7 @@ export default class VerdaccioRetryMiddleware implements IPluginMiddleware<Custo
             res.removeHeader('ETag');
 
             // 7. 重新分发请求，实现自动重试
-            app.handle(req, res, next);
+            app(req, res, next);
           });
 
           // 返回 res 对象
