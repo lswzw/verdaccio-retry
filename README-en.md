@@ -10,6 +10,21 @@ When a download for a package tarball (`.tgz` file) fails with an HTTP 4xx or 5x
 
 **After clearing the cache, the plugin will immediately retry the request once. If the retry succeeds, the user will get the correct package on the first attempt, without needing to retry manually. Only if the retry also fails will an error be returned.**
 
+### Logic Flowchart
+
+```mermaid
+graph TD
+    A[Client requests package] --> B{Verdaccio handles request};
+    B --> C{Plugin intercepts response};
+    C --> D{Is response status 4xx/5xx?};
+    D -- No --> E[Return successful response to client];
+    D -- Yes --> F[Log failure];
+    F --> G[Remove package from cache];
+    G --> H[Log cache removal];
+    H --> I[Retry request to uplink];
+    I --> J[Return retry result to client];
+```
+
 ## Installation
 
 To use this plugin, you must have Verdaccio installed.
