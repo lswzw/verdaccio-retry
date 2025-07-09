@@ -80,8 +80,11 @@ services:
 
 ### Usage
 
-1.  **Build and install the plugin.** This step builds the plugin and copies the necessary files (`package.json` and the compiled `lib` directory) into the `plugins` directory for the Docker container to use.
+1.  **Build and install the plugin.** This step installs dependencies, builds the plugin, and copies the necessary files (`package.json` and the compiled `lib` directory) into the `plugins` directory for the Docker container to use.
     ```bash
+    # Install dependencies
+    npm install
+
     # Build the plugin
     npm run build
 

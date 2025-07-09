@@ -95,8 +95,11 @@ services:
 
 ### 使用方法
 
-1.  **构建并安装插件。** 此步骤会构建插件，并将所需的文件（`package.json` 和编译后的 `lib` 目录）复制到 `plugins` 目录中，以供 Docker 容器使用。
+1.  **构建并安装插件。** 此步骤会安装依赖、构建插件，并将所需的文件（`package.json` 和编译后的 `lib` 目录）复制到 `plugins` 目录中，以供 Docker 容器使用。
     ```bash
+    # 安装依赖
+    npm install
+
     # 构建插件
     npm run build
 
