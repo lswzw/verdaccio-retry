@@ -46,6 +46,56 @@ warn --- [verdaccio-retry] non-200 response for package 'xlsx', triggering cache
 info --- [verdaccio-retry] successfully removed cached package 'xlsx'. Retrying request.
 ```
 
+## Docker Example
+
+You can find a `compose.yml` file in the `examples` directory to run Verdaccio with this plugin.
+
+### Directory Structure
+
+```
+examples
+├── compose.yml
+└── config
+    └── config.yaml
+```
+
+### `compose.yml`
+
+```yaml
+services:
+  verdaccio:
+    image: verdaccio/verdaccio
+    container_name: 'verdaccio'
+    restart: always
+    network_mode: host
+    user: root
+    environment:
+      - VERDACCIO_PORT=80
+    #ports:
+    #  - '4873:4873'
+    volumes:
+      - './config:/verdaccio/conf'
+      - './plugins:/verdaccio/plugins'
+```
+
+### Usage
+
+1.  **Create an `htpasswd` file for authentication.** Verdaccio is configured to use this file to protect publishing. Replace `your_username` with your desired username. You will be prompted for a password.
+    ```bash
+    # Navigate to the config directory
+    cd examples/config
+
+    # Create the htpasswd file (you must have apache2-utils or httpd-tools installed)
+    htpasswd -c htpasswd your_username
+    ```
+    After creation, navigate back to the `examples` directory.
+
+2.  **Start the Verdaccio container.** From the `examples` directory:
+    ```bash
+    docker-compose up -d
+    ```
+3.  Verdaccio will be running on port 80.
+
 ## Development
 
 See the [verdaccio contributing guide](https://github.com/verdaccio/verdaccio/blob/master/CONTRIBUTING.md) for instructions setting up your development environment.

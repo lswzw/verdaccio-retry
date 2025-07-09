@@ -1,0 +1,62 @@
+storage: ./storage
+plugins: /verdaccio/plugins
+middlewares:
+  audit:
+    enabled: true
+  retry:
+    enabled: true
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    timeout: 60s
+    maxage: 10080m  # 7 day
+    fail_timeout: 30m
+    max_fails: 3
+    cache: true
+  cnpm:
+    url: https://registry.npmmirror.com
+    timeout: 60s
+    maxage: 10080m
+    fail_timeout: 30m
+    max_fails: 3
+    cache: true
+
+packages:
+  '@*/*':
+    access: $all
+    publish: $authenticated
+    proxy: npmjs cnpm  # 调整顺序
+  '**':
+    access: $all
+    publish: $authenticated
+    proxy: npmjs cnpm
+
+log:
+  type: stdout
+  format: pretty
+  level: http  # 详细日志
+
+listen:
+  - 0.0.0.0:80
+
+server:
+  keepAliveTimeout: 0
+
+web:
+  enable: true
+  title: Verdaccio
+  gravatar: false
+  scope: '@scope'
+  pkgManagers: npm
+
+i18n:
+  web: zh-CN
+
+auth:
+  htpasswd:
+    file: ./htpasswd
+    max_users: -1
+
+http_proxy: http://192.168.1.254:7890/
+https_proxy: http://192.168.1.254:7890/

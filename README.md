@@ -61,6 +61,56 @@ npm run <task> -- --help
 
 将 `<task>` 替换为具体的任务名（如 build 或 test）。
 
+## Docker 示例
+
+您可以在 `examples` 目录中找到一个 `compose.yml` 文件，用于运行带有此插件的 Verdaccio。
+
+### 目录结构
+
+```
+examples
+├── compose.yml
+└── config
+    └── config.yaml
+```
+
+### `compose.yml`
+
+```yaml
+services:
+  verdaccio:
+    image: verdaccio/verdaccio
+    container_name: 'verdaccio'
+    restart: always
+    network_mode: host
+    user: root
+    environment:
+      - VERDACCIO_PORT=80
+    #ports:
+    #  - '4873:4873'
+    volumes:
+      - './config:/verdaccio/conf'
+      - './plugins:/verdaccio/plugins'
+```
+
+### 使用方法
+
+1.  **创建用于身份验证的 `htpasswd` 文件。** Verdaccio 被配置为使用此文件来保护发布权限。请将 `your_username` 替换为您想要的用户名，然后根据提示输入密码。
+    ```bash
+    # 进入 config 目录
+    cd examples/config
+
+    # 创建 htpasswd 文件 (需要先安装 apache2-utils 或 httpd-tools)
+    htpasswd -c htpasswd your_username
+    ```
+    创建后，请返回到 `examples` 目录。
+
+2.  **启动 Verdaccio 容器。** 在 `examples` 目录下执行：
+    ```bash
+    docker-compose up -d
+    ```
+3.  Verdaccio 将在 80 端口上运行。
+
 ---
 
 如需进一步帮助，欢迎提交 issue 或参与社区讨论。
