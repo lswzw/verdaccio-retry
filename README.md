@@ -95,7 +95,20 @@ services:
 
 ### 使用方法
 
-1.  **创建用于身份验证的 `htpasswd` 文件。** Verdaccio 被配置为使用此文件来保护发布权限。请将 `your_username` 替换为您想要的用户名，然后根据提示输入密码。
+1.  **构建并安装插件。** 此步骤会构建插件，并将所需的文件（`package.json` 和编译后的 `lib` 目录）复制到 `plugins` 目录中，以供 Docker 容器使用。
+    ```bash
+    # 构建插件
+    npm run build
+
+    # 为插件创建专用目录
+    mkdir -p examples/plugins/verdaccio-retry
+
+    # 复制编译后的代码和 package.json
+    cp -r lib/ examples/plugins/verdaccio-retry/
+    cp package.json examples/plugins/verdaccio-retry/
+    ```
+
+2.  **创建用于身份验证的 `htpasswd` 文件。** Verdaccio 被配置为使用此文件来保护发布权限。请将 `your_username` 替换为您想要的用户名，然后根据提示输入密码。
     ```bash
     # 进入 config 目录
     cd examples/config
@@ -105,11 +118,11 @@ services:
     ```
     创建后，请返回到 `examples` 目录。
 
-2.  **启动 Verdaccio 容器。** 在 `examples` 目录下执行：
+3.  **启动 Verdaccio 容器。** 在 `examples` 目录下执行：
     ```bash
     docker-compose up -d
     ```
-3.  Verdaccio 将在 80 端口上运行。
+4.  Verdaccio 将在 80 端口上运行。
 
 ---
 

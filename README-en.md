@@ -80,7 +80,20 @@ services:
 
 ### Usage
 
-1.  **Create an `htpasswd` file for authentication.** Verdaccio is configured to use this file to protect publishing. Replace `your_username` with your desired username. You will be prompted for a password.
+1.  **Build and install the plugin.** This step builds the plugin and copies the necessary files (`package.json` and the compiled `lib` directory) into the `plugins` directory for the Docker container to use.
+    ```bash
+    # Build the plugin
+    npm run build
+
+    # Create a dedicated directory for the plugin
+    mkdir -p examples/plugins/verdaccio-retry
+
+    # Copy the built code and package.json
+    cp -r lib/ examples/plugins/verdaccio-retry/
+    cp package.json examples/plugins/verdaccio-retry/
+    ```
+
+2.  **Create an `htpasswd` file for authentication.** Verdaccio is configured to use this file to protect publishing. Replace `your_username` with your desired username. You will be prompted for a password.
     ```bash
     # Navigate to the config directory
     cd examples/config
@@ -90,11 +103,11 @@ services:
     ```
     After creation, navigate back to the `examples` directory.
 
-2.  **Start the Verdaccio container.** From the `examples` directory:
+3.  **Start the Verdaccio container.** From the `examples` directory:
     ```bash
     docker-compose up -d
     ```
-3.  Verdaccio will be running on port 80.
+4.  Verdaccio will be running on port 80.
 
 ## Development
 
