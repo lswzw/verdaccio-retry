@@ -42,8 +42,8 @@ Once the plugin is installed and enabled, it operates automatically in the backg
 You can observe the plugin's activity by monitoring the Verdaccio server logs. When a package download fails and the plugin successfully removes it from the cache, you will see log entries similar to the following:
 
 ```log
-warn: [verdaccio-retry] non-200 response for package '@scope/pkg', triggering cache removal.
-info: [verdaccio-retry] successfully removed cached package '@scope/pkg'. It will be refetched on the next request.
+warn --- [verdaccio-retry] non-200 response for package 'xlsx', triggering cache removal and retry.
+info --- [verdaccio-retry] successfully removed cached package 'xlsx'. Retrying request.
 ```
 
 ## Development

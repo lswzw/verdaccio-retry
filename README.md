@@ -37,8 +37,8 @@ middlewares:
 你可以通过查看 Verdaccio 的服务日志来观察插件的工作情况。当包下载失败并被插件成功移除缓存时，日志中会出现类似如下内容：
 
 ```log
-warn: [verdaccio-retry] non-200 response for package '@scope/pkg', triggering cache removal.
-info: [verdaccio-retry] successfully removed cached package '@scope/pkg'. It will be refetched on the next request.
+warn --- [verdaccio-retry] non-200 response for package 'xlsx', triggering cache removal and retry.
+info --- [verdaccio-retry] successfully removed cached package 'xlsx'. Retrying request.
 ```
 
 ## 开发与构建
