@@ -8,7 +8,7 @@ This plugin functions as a middleware for the Verdaccio private npm proxy regist
 
 When a download for a package tarball (`.tgz` file) fails with an HTTP 4xx or 5xx error status, this plugin intercepts the failure. It then automatically removes that specific package from Verdaccio's cache.
 
-This process ensures that the next time the same package is requested, Verdaccio is forced to re-fetch it from the upstream registry (e.g., npmjs.com) instead of serving a potentially corrupted or incomplete file from its cache.
+**After clearing the cache, the plugin will immediately retry the request once. If the retry succeeds, the user will get the correct package on the first attempt, without needing to retry manually. Only if the retry also fails will an error be returned.**
 
 ## Installation
 
@@ -36,6 +36,8 @@ After adding this to your configuration, restart your Verdaccio server.
 ## Usage
 
 Once the plugin is installed and enabled, it operates automatically in the background. No manual intervention is required.
+
+**When a package download fails (such as with a 4xx/5xx error), the plugin will clear the cache and immediately retry the request, maximizing user experience.**
 
 You can observe the plugin's activity by monitoring the Verdaccio server logs. When a package download fails and the plugin successfully removes it from the cache, you will see log entries similar to the following:
 
